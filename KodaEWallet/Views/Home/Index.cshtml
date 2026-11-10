@@ -1,0 +1,36 @@
+﻿@using KodaEWallet.DTOs
+@model List<UserResponse>
+@{
+    ViewData["Title"] = "Pilih Pengguna";
+}
+
+<h1 class="h3 mb-1">Pilih Pengguna</h1>
+<p class="text-secondary mb-4">Pilih akun yang akan dipakai untuk simulasi e-wallet.</p>
+
+<div class="table-responsive shadow-sm rounded bg-white">
+    <table class="table table-hover mb-0">
+        <thead class="table-light">
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Telepon</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="align-middle">@user.Id</td>
+                    <td class="align-middle">@user.Name</td>
+                    <td class="align-middle">@user.Email</td>
+                    <td class="align-middle">@user.Phone</td>
+                    <td class="text-end">
+                        <a class="btn btn-primary btn-sm px-3" asp-controller="Wallet" asp-action="Dashboard" asp-route-userId="@user.Id">Pilih</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,42 @@
+@using KodaEWallet.DTOs
+@using KodaEWallet.Helpers
+@model TransferRequest
+@{
+    ViewData["Title"] = "Transfer";
+    var wallet = (WalletResponse)ViewBag.Wallet;
+}
+
+<h1 class="h3 mb-1">Transfer</h1>
+<p class="text-secondary mb-4">@wallet.OwnerName (@wallet.WalletNumber) &middot; Saldo: <strong>@Format.Rupiah(wallet.Balance)</strong></p>
+
+<form class="card shadow-sm border-0 mb-4" asp-action="Transfer" asp-route-userId="@wallet.UserId" method="post">
+    <div class="card-body p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger shadow-sm"></div>
+        <input type="hidden" name="SenderUserId" value="@wallet.UserId" />
+
+        <div class="mb-3">
+            <label for="ReceiverWalletNumber" class="form-label fw-bold">Nomor Wallet Tujuan</label>
+            <input type="text" class="form-control" id="ReceiverWalletNumber" name="ReceiverWalletNumber" placeholder="contoh: WAL002"
+                value="@Model.ReceiverWalletNumber" />
+            <span class="text-danger small" asp-validation-for="ReceiverWalletNumber"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Amount" class="form-label fw-bold">Nominal Transfer</label>
+            <input type="number" step="0.01" class="form-control" id="Amount" name="Amount" placeholder="contoh: 50000"
+                value="@(Model.Amount > 0 ? Model.Amount.ToString(System.Globalization.CultureInfo.InvariantCulture) : "")" />
+            <span class="text-danger small" asp-validation-for="Amount"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="Description" class="form-label fw-bold">Catatan (opsional)</label>
+            <input type="text" class="form-control" id="Description" name="Description" value="@Model.Description" />
+            <span class="text-danger small" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary px-4">Lanjut</button>
+            <a class="btn btn-secondary px-4" asp-action="Dashboard" asp-route-userId="@wallet.UserId">Kembali</a>
+        </div>
+    </div>
+</form>

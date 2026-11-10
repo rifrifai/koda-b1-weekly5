@@ -1,0 +1,66 @@
+@using KodaEWallet.DTOs
+@using KodaEWallet.Helpers
+@model TransactionHistoryResponse
+@{
+    ViewData["Title"] = "Riwayat Transaksi";
+    int userId = (int)ViewBag.UserId;
+}
+
+<h1 class="h3 mb-1">Riwayat Transaksi</h1>
+<p class="text-secondary mb-4">Wallet @Model.WalletNumber</p>
+
+<div class="d-flex gap-2 flex-wrap mb-4">
+    <a class="btn @(Model.Filter == "All" ? "btn-primary" : "btn-outline-secondary")" asp-action="History" asp-route-userId="@userId" asp-route-filter="All">Semua</a>
+    <a class="btn @(Model.Filter == "Income" ? "btn-primary" : "btn-outline-secondary")" asp-action="History" asp-route-userId="@userId" asp-route-filter="Income">Pemasukan</a>
+    <a class="btn @(Model.Filter == "Expense" ? "btn-primary" : "btn-outline-secondary")" asp-action="History" asp-route-userId="@userId" asp-route-filter="Expense">Pengeluaran</a>
+</div>
+
+@if (Model.Transactions.Count == 0)
+{
+    <p class="text-secondary">Belum ada transaksi.</p>
+}
+else
+{
+    <div class="table-responsive shadow-sm rounded bg-white mb-4">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Jenis</th>
+                    <th>Pengirim</th>
+                    <th>Penerima</th>
+                    <th class="text-end">Nominal</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model.Transactions)
+                {
+                    bool isIncome = t.Direction == "Income";
+                    <tr>
+                        <td class="align-middle">@Format.DateTimeText(t.CreatedAt)</td>
+                        <td class="align-middle">@t.Label</td>
+                        <td class="align-middle">@(t.SenderName is null ? "-" : $"{t.SenderName} ({t.SenderWalletNumber})")</td>
+                        <td class="align-middle">@t.ReceiverName (@t.ReceiverWalletNumber)</td>
+                        <td class="align-middle text-end fw-bold @(isIncome ? "text-success" : "text-danger")">
+                            @(isIncome ? "+" : "-") @Format.Rupiah(t.Amount)
+                        </td>
+                        <td class="align-middle">@(string.IsNullOrWhiteSpace(t.Description) ? "-" : t.Description)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <div class="mb-2">Total Transaksi : <strong>@Model.TotalCount</strong></div>
+        <div class="mb-2">Total Pemasukan : <span class="text-success fw-bold">@Format.Rupiah(Model.TotalIncome)</span></div>
+        <div>Total Pengeluaran : <span class="text-danger fw-bold">@Format.Rupiah(Model.TotalExpense)</span></div>
+    </div>
+</div>
+
+<div class="mb-4">
+    <a class="btn btn-secondary px-4" asp-action="Dashboard" asp-route-userId="@userId">Kembali</a>
+</div>

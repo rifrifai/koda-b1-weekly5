@@ -1,0 +1,38 @@
+@using KodaEWallet.DTOs
+@using KodaEWallet.Helpers
+@model WalletResponse
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <h1 class="h4 mb-4">Welcome, @Model.OwnerName!</h1>
+
+        <table class="table table-borderless mb-0 w-auto">
+            <tr>
+                <td class="text-secondary ps-0 py-1" style="width: 160px;">Wallet Number</td>
+                <td class="py-1">: @Model.WalletNumber</td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Balance</td>
+                <td class="py-1">: <strong>@Format.Rupiah(Model.Balance)</strong></td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Total Income</td>
+                <td class="py-1">: <span class="text-success fw-bold">@Format.Rupiah(Model.TotalIncome)</span></td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Total Expense</td>
+                <td class="py-1">: <span class="text-danger fw-bold">@Format.Rupiah(Model.TotalExpense)</span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="d-flex gap-2 flex-wrap mb-4">
+    <a class="btn btn-primary" asp-action="TopUp" asp-route-userId="@Model.UserId">1. Top Up</a>
+    <a class="btn btn-primary" asp-action="Transfer" asp-route-userId="@Model.UserId">2. Transfer</a>
+    <a class="btn btn-primary" asp-action="History" asp-route-userId="@Model.UserId">3. Transaction History</a>
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">4. Change User</a>
+</div>

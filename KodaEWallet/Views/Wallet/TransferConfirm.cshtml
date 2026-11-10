@@ -1,0 +1,52 @@
+@using KodaEWallet.DTOs
+@using KodaEWallet.Helpers
+@model TransferPreviewResponse
+@{
+    ViewData["Title"] = "Konfirmasi Transfer";
+}
+
+<h1 class="h3 mb-1">Konfirmasi Transfer</h1>
+<p class="text-secondary mb-4">Periksa data berikut. Transfer baru diproses setelah Anda menekan Konfirmasi.</p>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body p-4">
+        <table class="table table-borderless mb-4 w-auto">
+            <tr>
+                <td class="text-secondary ps-0 py-1" style="width: 160px;">Pengirim</td>
+                <td class="py-1">: @Model.SenderName</td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Penerima</td>
+                <td class="py-1">: @Model.ReceiverName (@Model.ReceiverWalletNumber)</td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Nominal</td>
+                <td class="py-1">: <strong>@Format.Rupiah(Model.Amount)</strong></td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Catatan</td>
+                <td class="py-1">: @(string.IsNullOrWhiteSpace(Model.Description) ? "-" : Model.Description)</td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Saldo Sekarang</td>
+                <td class="py-1">: @Format.Rupiah(Model.SenderBalance)</td>
+            </tr>
+            <tr>
+                <td class="text-secondary ps-0 py-1">Sisa Saldo</td>
+                <td class="py-1">: <span class="text-primary fw-bold">@Format.Rupiah(Model.SenderBalance - Model.Amount)</span></td>
+            </tr>
+        </table>
+
+        <form asp-action="ConfirmTransfer" asp-route-userId="@Model.SenderUserId" method="post">
+            <input type="hidden" name="SenderUserId" value="@Model.SenderUserId" />
+            <input type="hidden" name="ReceiverWalletNumber" value="@Model.ReceiverWalletNumber" />
+            <input type="hidden" name="Amount" value="@Model.Amount.ToString(System.Globalization.CultureInfo.InvariantCulture)" />
+            <input type="hidden" name="Description" value="@Model.Description" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary px-4">Konfirmasi Transfer</button>
+                <a class="btn btn-secondary px-4" asp-action="Transfer" asp-route-userId="@Model.SenderUserId">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
