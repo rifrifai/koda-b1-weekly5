@@ -1,6 +1,6 @@
 using System.Data;
 using KodaEWallet.Data;
-using KodaEWallet.Interfaces;
+using KodaEWallet.Repositories;
 using KodaEWallet.Models;
 using Microsoft.Data.SqlClient;
 

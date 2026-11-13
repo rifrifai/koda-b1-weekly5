@@ -1,6 +1,6 @@
 using KodaEWallet.DTOs;
 using KodaEWallet.Exceptions;
-using KodaEWallet.Interfaces;
+using KodaEWallet.Repositories;
 using KodaEWallet.Models;
 
 namespace KodaEWallet.Services;

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace KodaEWallet.DTOs;
+
 public class CreateUserRequest
 {
     [Required(ErrorMessage = "Nama wajib diisi")]
@@ -13,6 +14,7 @@ public class CreateUserRequest
     public string Email { get; set; } = "";
 
     [Required(ErrorMessage = "Nomor telepon wajib diisi")]
-    [RegularExpression(@"^[0-9+]{9,13}$", ErrorMessage = "Nomor telepon harus 9-13 digit angka")]
+    // [RegularExpression(@"^[0-9]{9,13}$", ErrorMessage = "Nomor telepon harus 9-13 digit angka")]
+    [Phone]
     public string Phone { get; set; } = "";
 }

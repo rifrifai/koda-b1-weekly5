@@ -1,6 +1,6 @@
 using KodaEWallet.Models;
 
-namespace KodaEWallet.Interfaces;
+namespace KodaEWallet.Repositories;
 
 public interface IUserRepository
 {

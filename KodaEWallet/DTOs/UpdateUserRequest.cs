@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace KodaEWallet.DTOs;
+
 public class UpdateUserRequest
 {
     [Required(ErrorMessage = "Nama wajib diisi")]
@@ -13,6 +14,6 @@ public class UpdateUserRequest
     public string Email { get; set; } = "";
 
     [Required(ErrorMessage = "Nomor telepon wajib diisi")]
-    [RegularExpression(@"^[0-9+]{8,15}$", ErrorMessage = "Nomor telepon harus 8-15 digit angka")]
+    [RegularExpression(@"^[0-9]{8,15}$", ErrorMessage = "Nomor telepon harus 8-15 digit angka")]
     public string Phone { get; set; } = "";
 }

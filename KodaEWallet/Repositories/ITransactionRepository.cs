@@ -1,6 +1,6 @@
 using KodaEWallet.Models;
 
-namespace KodaEWallet.Interfaces;
+namespace KodaEWallet.Repositories;
 public interface ITransactionRepository
 {
     Task<List<Transaction>> GetByWalletAsync(int walletId, HistoryFilter filter, CancellationToken ct);

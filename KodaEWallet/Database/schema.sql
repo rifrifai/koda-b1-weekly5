@@ -1,6 +1,6 @@
--- IF DB_ID('KodaEWallet') IS NULL
---     CREATE DATABASE KodaEWallet;
--- GO
+IF DB_ID('KodaEWallet') IS NULL
+    CREATE DATABASE KodaEWallet;
+GO
 
 -- USE KodaEWallet;
 -- GO
@@ -70,4 +70,4 @@
 --     (3,    1, 'TRANSFER', 300000, 'Traktir makan warung gatcha', '2026-10-30 13:45'),
 --     (2,    3, 'TRANSFER',  50000, 'Bayar hutang kas',      '2026-11-01 19:20');
 -- GO
--- SELECT * FROM Transactions;
+SELECT * FROM Transactions;

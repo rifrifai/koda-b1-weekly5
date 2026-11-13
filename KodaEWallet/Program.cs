@@ -1,6 +1,5 @@
 using KodaEWallet.Data;
 using KodaEWallet.Exceptions;
-using KodaEWallet.Interfaces;
 using KodaEWallet.Repositories;
 using KodaEWallet.Services;
 
